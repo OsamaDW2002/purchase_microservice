@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('purchase/<param1>' , methods = ['GET'])
 def orders(param1):
-    base_url = 'http://localhost:5000/query'
+    base_url = 'http://localhost:5050/query'
     response = requests.get(base_url, params={'item_number': param1})  # Ensuring proper URL encoding
 
     if response.ok:
