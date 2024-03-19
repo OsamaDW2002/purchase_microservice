@@ -10,9 +10,9 @@ def get_db_connection():
 
 app = Flask(__name__)
 
-@app.route('/purchase/<ItemNum>' , methods = ['GET'])
+@app.route('172.17.0.1:5060/purchase/<ItemNum>' , methods = ['GET'])
 def orders(ItemNum):
-    base_url = 'http://localhost:5000/query'
+    base_url = 'http://172.17.0.1:5050/query'
     response = requests.get(base_url, params={'item_number': ItemNum})
 
     if response.ok:
@@ -20,7 +20,7 @@ def orders(ItemNum):
         if data['Count'] <= 0:
             return jsonify({'purchase' : "this book is out of stock" })
 
-        response = requests.patch('http://localhost:5000/update' , json = {'stock_count' : -1
+        response = requests.patch('http://172.17.0.1:5050/update' , json = {'stock_count' : -1
                                                                 ,'item_number' : data['ItemNumber']})
         if response.json() == "Updated record successfully":
             con = get_db_connection()
@@ -36,5 +36,5 @@ def orders(ItemNum):
 
 
 if __name__ == '__main__':
-    app.run(debug=True ,host= '0.0.0.1' ,port=5060)
+    app.run(debug=True ,host= '0.0.0.0' ,port=5060)
 
