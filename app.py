@@ -26,9 +26,9 @@ def orders(param1):
             con = get_db_connection()
             con.cursor().execute("Insert Into 'order' (item_number) values ("+param1+")")
             con.commit()
-            return jsonify({'purchase' : 'successfuly'})
+            return jsonify({'message' : 'successfully purchased number =' + param1})
         else:
-            return jsonify({'purchase' : 'fail'})
+            return jsonify({'message' : 'failure purchased number =' + param1})
     else:
         return jsonify({'error': 'Failed to fetch data'}), response.status_code
 
