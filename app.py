@@ -10,10 +10,10 @@ def get_db_connection():
 
 app = Flask(__name__)
 
-@app.route('/purchase/<param1>' , methods = ['GET'])
-def orders(param1):
+@app.route('/purchase/<ItemNum>' , methods = ['GET'])
+def orders(ItemNum):
     base_url = 'http://localhost:5000/query'
-    response = requests.get(base_url, params={'item_number': param1})  # Ensuring proper URL encoding
+    response = requests.get(base_url, params={'item_number': ItemNum})  # Ensuring proper URL encoding
 
     if response.ok:
         data = response.json()
@@ -24,11 +24,11 @@ def orders(param1):
                                                                 ,'item_number' : data['ItemNumber']})
         if response.json() == "Updated record successfully":
             con = get_db_connection()
-            con.cursor().execute("Insert Into 'order' (item_number) values ("+param1+")")
+            con.cursor().execute("Insert Into 'order' (item_number) values (" + ItemNum + ")")
             con.commit()
-            return jsonify({'message' : 'successfully purchased number =' + param1})
+            return jsonify({'message' : 'successfully purchased number =' + ItemNum})
         else:
-            return jsonify({'message' : 'failure purchased number =' + param1})
+            return jsonify({'message' : 'failure purchased number =' + ItemNum})
     else:
         return jsonify({'error': 'Failed to fetch data'}), response.status_code
 
