@@ -13,7 +13,7 @@ app = Flask(__name__)
 @app.route('/purchase/<ItemNum>' , methods = ['GET'])
 def orders(ItemNum):
     base_url = 'http://localhost:5000/query'
-    response = requests.get(base_url, params={'item_number': ItemNum})  # Ensuring proper URL encoding
+    response = requests.get(base_url, params={'item_number': ItemNum})
 
     if response.ok:
         data = response.json()
@@ -36,5 +36,5 @@ def orders(ItemNum):
 
 
 if __name__ == '__main__':
-    app.run(debug=True ,host= '0.0.0.0' ,port=5060)
+    app.run(debug=True ,host= '0.0.0.1' ,port=5060)
 
